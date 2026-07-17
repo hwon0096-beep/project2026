@@ -1,0 +1,89 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Fulfillment Speed: Order Purchase to Delivery Time",
+    "subtitle": "The overall average delivery time takes 12.6 days, with a median peak at 10.2 days.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "data/orders.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "filter": "datum.order_status === 'delivered' && datum.delivery_days != null"
+    },
+    {
+      "filter": "datum.delivery_days <= 45"
+    }
+  ],
+  "layer": [
+    {
+      "description": "Logistical Delivery Speed Bars",
+      "mark": {
+        "type": "bar",
+        "color": "#03AED2",
+        "opacity": 0.8,
+        "binSpacing": 1,
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "delivery_days",
+          "type": "quantitative",
+          "bin": {"maxbins": 45},
+          "title": "Actual Delivery Time (Days)"
+        },
+        "y": {
+          "aggregate": "count",
+          "type": "quantitative",
+          "title": "Number of Orders Delivered"
+        }
+      }
+    },
+    {
+      "description": "Mean/Average Delivery Target Benchmark Line",
+      "mark": {
+        "type": "rule",
+        "color": "#FFC94D",
+        "size": 2.5,
+        "strokeDash": [5, 4]
+      },
+      "encoding": {
+        "x": {
+          "aggregate": "mean",
+          "field": "delivery_days",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "description": "Label text highlighting the Benchmark Line",
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "dy": -100,
+        "fontWeight": "bold",
+        "fontSize": 11,
+        "color": "#FFC94D"
+      },
+      "encoding": {
+        "x": {
+          "aggregate": "mean",
+          "field": "delivery_days",
+          "type": "quantitative"
+        },
+        "text": {"value": "Average: 12.6 Days"}
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

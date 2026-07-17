@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The Financing Landscape: Installments vs. Cart Value",
+    "subtitle": "Bubble size represents transaction popularity. Credit cards pull ahead due to flexible terms.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "data/3_transaction.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "filter": "datum.payment_type !== 'not_defined'"
+    }
+  ],
+  "layer": [
+    {
+      "description": "The Bubble Plot Layer",
+      "mark": {
+        "type": "circle",
+        "opacity": 0.85,
+        "stroke": "#444444",
+        "strokeWidth": 1.5,
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "average_installments",
+          "type": "quantitative",
+          "title": "Average Installment Terms (Months)",
+          "scale": {"domain": [0, 5]}
+        },
+        "y": {
+          "field": "average_payment_value",
+          "type": "quantitative",
+          "title": "Average Value Spent per Order ($)",
+          "scale": {"domain": [50, 180]}
+        },
+        "size": {
+          "field": "transaction_count",
+          "type": "quantitative",
+          "title": "Total Transactions",
+          "scale": {"range": [400, 2500]}
+        },
+        "color": {
+          "field": "payment_type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["credit_card", "boleto", "debit_card", "voucher"],
+            "range": ["#434E78", "#607B8F", "#F7E396", "#E97F4A"]
+          },
+          "title": "Payment Method"
+        }
+      }
+    },
+    {
+      "description": "Text Labels with Dynamic Vertical Nudge to prevent overlaps",
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 28,
+        "dy": {
+          "expr": "datum.payment_type === 'boleto' ? -10 : (datum.payment_type === 'debit_card' ? 5 : 0)"
+        },
+        "fontWeight": "bold",
+        "fontSize": 12,
+        "color": "#333333"
+      },
+      "encoding": {
+        "x": {
+          "field": "average_installments",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "average_payment_value",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "payment_type",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

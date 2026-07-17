@@ -1,0 +1,84 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "How Financing Options Drive Purchase Value",
+    "subtitle": "Credit card installments unlock higher-value carts compared to cash-upfront methods.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "data/3_transaction.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "filter": "datum.payment_type !== 'not_defined'"
+    },
+    {
+      "calculate": "'Avg. Term: ' + format(datum.average_installments, '.1f') + ' mos'",
+      "as": "installment_label"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "payment_type",
+      "type": "nominal",
+      "sort": {
+        "field": "average_payment_value",
+        "order": "descending"
+      },
+      "title": "Payment Method",
+      "axis": {"labelFontSize": 11}
+    }
+  },
+  "layer": [
+    {
+      "description": "Base Bars colored by Macro Ecosystem using Custom Palette",
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 4,
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "average_payment_value",
+          "type": "quantitative",
+          "title": "Average Payment Value ($)"
+        },
+        "color": {
+          "field": "payment_type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["credit_card", "boleto", "debit_card", "voucher"],
+            "range": ["#434E78", "#607B8F", "#F7E396", "#E97F4A"]
+          },
+          "title": "Payment Ecosystem"
+        }
+      }
+    },
+    {
+      "description": "Layered Text Badges to cleanly flag installment options",
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontWeight": "bold",
+        "fontSize": 11,
+        "color": "#444444"
+      },
+      "encoding": {
+        "x": {
+          "field": "average_payment_value",
+          "type": "quantitative"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

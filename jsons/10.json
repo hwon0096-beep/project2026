@@ -1,0 +1,92 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The Logistics Quality Cliff: Delay Days vs. Ratings",
+    "subtitle": "Crossing the promised delivery deadline drops average satisfaction scores from 4.3 down to under 2.0 stars.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "data/orders.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "lookup": "order_id",
+      "from": {
+        "data": {"url": "data/order_reviews.csv", "format": {"type": "csv"}},
+        "key": "order_id",
+        "fields": ["review_score"]
+      }
+    },
+    {
+      "filter": "datum.delivery_delay_days != null && datum.review_score != null"
+    },
+    {
+      "filter": "datum.delivery_delay_days >= -20 && datum.delivery_delay_days <= 30"
+    },
+    {
+      "aggregate": [{"op": "mean", "field": "review_score", "as": "avg_review"}],
+      "groupby": ["delivery_delay_days"]
+    }
+  ],
+  "layer": [
+    {
+      "description": "Trend curve tracking the rating drop-off",
+      "mark": {
+        "type": "line",
+        "color": "#491071",
+        "strokeWidth": 3.5,
+        "interpolate": "monotone",
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "delivery_delay_days",
+          "type": "quantitative",
+          "title": "Days of Delay (Negative = Early / Positive = Late)"
+        },
+        "y": {
+          "field": "avg_review",
+          "type": "quantitative",
+          "title": "Average Customer Review Score (1-5★)",
+          "scale": {"domain": [1, 5]}
+        }
+      }
+    },
+    {
+      "description": "Target SLA deadline threshold marker",
+      "mark": {
+        "type": "rule",
+        "color": "#000000",
+        "strokeWidth": 2,
+        "strokeDash": [5, 4]
+      },
+      "encoding": {
+        "x": {"datum": 0}
+      }
+    },
+    {
+      "description": "Label text highlighting the SLA target limit",
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "dy": -100,
+        "fontSize": 11,
+        "color": "#000000"
+      },
+      "encoding": {
+        "x": {"datum": 0},
+        "text": {"value": "Promised Delivery Target"}
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Customer Review Comment Length by Rating",
+    "subtitle": "Frustrated customers write messages that are more than twice as long as satisfied ones.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "values": [
+      {"Rating": "1 Star ★", "Avg_Words": 17.5, "Status": "Frustration"},
+      {"Rating": "2 Stars ★★", "Avg_Words": 17.1, "Status": "Frustration"},
+      {"Rating": "3 Stars ★★★", "Avg_Words": 14.6, "Status": "Neutral"},
+      {"Rating": "4 Stars ★★★★", "Avg_Words": 10.6, "Status": "Satisfaction"},
+      {"Rating": "5 Stars ★★★★★", "Avg_Words": 8.4, "Status": "Satisfaction"}
+    ]
+  },
+  "layer": [
+    {
+      "description": "Base Bars indicating text length",
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 4,
+        "tooltip": true
+      },
+      "encoding": {
+        "y": {
+          "field": "Rating",
+          "type": "nominal",
+          "title": "Review Score",
+          "axis": {"labelFontSize": 11}
+        },
+        "x": {
+          "field": "Avg_Words",
+          "type": "quantitative",
+          "title": "Average Comment Length (Words)"
+        },
+        "color": {
+          "field": "Rating",
+          "type": "nominal",
+          "scale": {
+            "domain": ["1 Star ★", "2 Stars ★★", "3 Stars ★★★", "4 Stars ★★★★", "5 Stars ★★★★★"],
+            "range": [
+              "#dad7cd", 
+              "#a3b18a", 
+              "#588157", 
+              "#3a5a40", 
+              "#344e41"]
+          },
+          "title": "Review Sentiment"
+        }
+      }
+    },
+    {
+      "description": "Overlay text badges displaying exact word averages",
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontWeight": "bold",
+        "fontSize": 11,
+        "color": "#444444"
+      },
+      "encoding": {
+        "y": {
+          "field": "Rating",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "Avg_Words",
+          "type": "quantitative"
+        },
+        "text": {
+          "calculate": "format(datum.Avg_Words, '.1f') + ' Words'",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

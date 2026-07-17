@@ -1,0 +1,11 @@
+order_id,number_of_payment_methods,payment_combination,total_combined_order_value
+80dfedb6d17bf23539beeef3c768f4d7,2,credit_card,4194.76
+9de73f3e6157169ad6c32b9f313c7dcb,2,credit_card,4034.44
+f398a143c0fe171d965db2096cf064cf,2,"credit_card + voucher",3297.40
+83e6338b5cf25dcf222551cb8da8d0d6,2,"credit_card + voucher",2692.82
+a863fef6caa86aa29cabfbf7e0b6f911,2,"credit_card + voucher",2323.25
+6907ea7150759a085c8ed75a55aeb90d,2,credit_card,2150.81
+ea7835f19dc6af291955d6e270d443f4,2,"credit_card + voucher",2066.34
+db66dca329373cf37340222e240340b6,2,"credit_card + voucher",2014.99
+53be479f3b3486d26abed234b365a359,2,credit_card,1942.60
+30f610db02d0880c9687dd1edd8b8710,2,"credit_card + voucher",1925.77

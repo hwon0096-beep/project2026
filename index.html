@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Ecosystem & Logistics Storyboard</title>
+    <!-- Include Vega, Vega-Lite, and Vega-Embed libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Decoding E-Commerce Operations: From Cart to Delivery</h1>
+            <p class="subtitle">Analyzing the intersection of macro revenue trends, backend logistics pipelines, and customer feedback architectures.</p>
+        </div>
+    </header>
+    
+    <main class="container">
+       
+        <!-- SECTION 1: Macro Revenue and Catalog Performance -->
+        <section id="revenue" class="story-section">
+            <h2>1. Catalog Revenue Drivers & Order Profiling</h2>
+            <p class="narrative-text">
+                Understanding high-performing market sectors and cart value distributions highlights the direct impact financing options have on business scalability.
+            </p>
+            <div class="chart-row-1col">
+                <div class="chart-box">
+                    <div id="vis1"></div>
+                    <p class="chart-description">Personal Care, Luxury, and Home categories represent the major revenue anchors within the store catalog.</p>
+                </div>
+            </div>
+            <div class="chart-row-2col">
+                <div class="chart-box">
+                    <div id="vis2"></div>
+                    <p class="chart-description">The vast majority of purchase receipts fall below a $150 threshold, creating a distinct high-volume baseline.</p>
+                </div>
+                <div class="chart-box">
+                    <div id="vis3"></div>
+                    <p class="chart-description">Providing extended split financing features systematically increases total cart margins over cash ecosystems.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Logistics Pipelines and Fulfillment Speeds -->
+        <section id="logistics" class="story-section">
+            <h2>2. Fulfillment Pipelines & Structural Constraints</h2>
+            <p class="narrative-text">
+                Tracking fulfillment speeds isolates clear bottlenecks between standard internal sorting phases and external transport targets.
+            </p>
+            <div class="chart-row-1col">
+                <div class="chart-box">
+                    <div id="vis6"></div>
+                    <p class="chart-description">Total delivery timelines peak at a 10.2-day median, though tail anomalies extend the arithmetic mean upward.</p>
+                </div>
+            </div>
+            <div class="chart-row-2col">
+                <div class="chart-box">
+                    <div id="vis7"></div>
+                    <p class="chart-description">Standard routing systems perform reliably, maintaining an overall 93.2% on-time service level agreement compliance rate.</p>
+                </div>
+                <div class="chart-box">
+                    <div id="vis8"></div>
+                    <p class="chart-description">Comparative route mapping proves that operational friction is isolated almost completely within final-mile courier legs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Customer Satisfaction Structure -->
+        <section id="feedback" class="story-section">
+            <h2>3. Customer Sentiment & The Quality Cliff</h2>
+            <p class="narrative-text">
+                Mapping ratings against backend logistics metrics highlights how sharply fulfillment delays degrade consumer sentiment.
+            </p>
+            <div class="chart-row-1col">
+                <div class="chart-box">
+                    <div id="vis10"></div>
+                    <p class="chart-description">Satisfaction scores plummet from a 4.3-star baseline down to under 2.0 stars immediately after passing delivery deadlines.</p>
+                </div>
+            </div>
+            <div class="chart-row-2col">
+                <div class="chart-box">
+                    <div id="vis9"></div>
+                    <p class="chart-description">While 5-star responses form the core majority, low-tier ratings correlate directly with systemic delivery delays.</p>
+                </div>
+                <div class="chart-box">
+                    <div id="vis11"></div>
+                    <p class="chart-description">Frustrated users compose highly detailed text responses, writing reviews that average twice the length of positive submittals.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Payment Mechanisms -->
+        <section id="payments" class="story-section">
+            <h2>4. Payment Structures & Financing Dynamics</h2>
+            <p class="narrative-text">
+                Evaluating different user payment frameworks shows a clean divide between immediate cash systems and long-term credit lines.
+            </p>
+            <div class="chart-row-2col">
+                <div class="chart-box">
+                    <div id="vis5"></div>
+                    <p class="chart-description">Credit cards stand alone in unlocking complex payment installments, while alternative methods remain entirely upfront.</p>
+                </div>
+                <div class="chart-box">
+                    <div id="vis4"></div>
+                    <p class="chart-description">Extended payment plans scale dynamically, matching larger transaction balances over predictable monthly cycles.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Conclusion Section -->
+    <section id="conclusion" class="story-section" style="width: 92%; max-width: 1500px; margin: 0 auto 35px auto;">
+        <h2>Conclusion</h2>
+        <blockquote class="conclusion-quote">
+            Optimizing final-mile carrier partnerships and expanding credit-based flexible payment options represent the primary paths to increasing customer retention and average order values.
+        </blockquote>
+    </section>
+       
+    <footer>
+        <div class="footer-content">
+            <p><strong>Author:</strong> Wong Hui Qing</p>
+            <p><strong>Date:</strong> 13 July 2026</p>
+            <p><strong>AI Acknowledgment:</strong> Generative AI (Gemini) was used for dashboard structure optimization and narrative styling.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Options block to disable native Vega actions and enforce clean layouts
+        const opt = { actions: false, width: "container" };
+        
+        // Dynamic JSON Chart Initializations from your root directory
+        vegaEmbed('#vis1', 'jsons/1.json', opt).catch(console.error);
+        vegaEmbed('#vis2', 'jsons/2.json', opt).catch(console.error);
+        vegaEmbed('#vis3', 'jsons/3.json', opt).catch(console.error);
+        vegaEmbed('#vis4', 'jsons/4.json', opt).catch(console.error);
+        vegaEmbed('#vis5', 'jsons/5.json', opt).catch(console.error);
+        vegaEmbed('#vis6', 'jsons/6.json', opt).catch(console.error);
+        vegaEmbed('#vis7', 'jsons/7.json', opt).catch(console.error);
+        vegaEmbed('#vis8', 'jsons/8.json', opt).catch(console.error);
+        vegaEmbed('#vis9', 'jsons/9.json', opt).catch(console.error);
+        vegaEmbed('#vis10', 'jsons/10.json', opt).catch(console.error);
+        vegaEmbed('#vis11', 'jsons/11.json', opt).catch(console.error);
+    </script>
+</body>
+</html>

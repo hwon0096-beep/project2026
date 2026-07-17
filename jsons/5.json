@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Payment Internal Composition by Installment Brackets",
+    "subtitle": "Contrasting rigid cash ecosystems against the flexible financing structures of credit cards.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "values": [
+      {"payment_type": "credit_card", "bracket": "Cash Upfront (1 mo)", "percentage": 33.15},
+      {"payment_type": "credit_card", "bracket": "Short-Term (2-6 mos)", "percentage": 50.81},
+      {"payment_type": "credit_card", "bracket": "Long-Term (7+ mos)", "percentage": 16.04},
+      {"payment_type": "boleto", "bracket": "Cash Upfront (1 mo)", "percentage": 100.0},
+      {"payment_type": "debit_card", "bracket": "Cash Upfront (1 mo)", "percentage": 100.0},
+      {"payment_type": "voucher", "bracket": "Cash Upfront (1 mo)", "percentage": 100.0}
+    ]
+  },
+  "mark": {
+    "type": "bar",
+    "cornerRadiusEnd": 0,
+    "tooltip": true
+  },
+  "encoding": {
+    "y": {
+      "field": "payment_type",
+      "type": "nominal",
+      "title": "Payment Method",
+      "axis": {"labelFontSize": 12},
+      "sort": ["credit_card", "boleto", "debit_card", "voucher"]
+    },
+    "x": {
+      "field": "percentage",
+      "type": "quantitative",
+      "title": "Percentage of Transactions (%)",
+      "scale": {"domain": [0, 100]}
+    },
+    "color": {
+      "field": "bracket",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Cash Upfront (1 mo)", "Short-Term (2-6 mos)", "Long-Term (7+ mos)"],
+        "range": ["#30364F", "#C5B3D3", "#ACBAC4"]
+      },
+      "title": "Installment Bracket",
+      "legend": {
+        "orient": "bottom",
+        "offset": 15
+      }
+    },
+    "tooltip": [
+      {"field": "payment_type", "type": "nominal", "title": "Payment Method"},
+      {"field": "bracket", "type": "nominal", "title": "Bracket"},
+      {"field": "percentage", "type": "quantitative", "title": "Share of Method", "format": ".1f"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

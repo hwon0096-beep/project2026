@@ -1,0 +1,103 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Marketplace Customer Review Rating Distribution",
+    "subtitle": "Detailed breakdown of all 5 review scores, showing a strong majority of 5-star ratings.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 360,
+  "data": {
+    "values": [
+      {"Rating": "1 Star ★", "percentage": 11.51},
+      {"Rating": "2 Stars ★★", "percentage": 3.18},
+      {"Rating": "3 Stars ★★★", "percentage": 8.24},
+      {"Rating": "4 Stars ★★★★", "percentage": 19.29},
+      {"Rating": "5 Stars ★★★★★", "percentage": 57.78}
+    ]
+  },
+  "transform": [
+    {
+      "calculate": "format(datum.percentage, '.1f') + '%'",
+      "as": "percentage_label"
+    }
+  ],
+  "layer": [
+    {
+      "description": "The 5-Segment Pie Base Layer",
+      "mark": {
+        "type": "arc", 
+        "outerRadius": 120,
+        "stroke": "#ffffff", 
+        "strokeWidth": 2,
+        "tooltip": true
+      },
+      "encoding": {
+        "theta": {
+          "field": "percentage", 
+          "type": "quantitative",
+          "stack": true
+        },
+        "color": {
+          "field": "Rating",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "1 Star ★", 
+              "2 Stars ★★", 
+              "3 Stars ★★★", 
+              "4 Stars ★★★★", 
+              "5 Stars ★★★★★"
+            ],
+            "range": [
+              "#dad7cd", 
+              "#a3b18a", 
+              "#588157", 
+              "#3a5a40", 
+              "#344e41"
+            ]
+          },
+          "title": "Review Score",
+          "legend": {
+            "orient": "right",
+            "offset": 25,
+            "columns": 1,
+            "labelFontSize": 11
+          }
+        }
+      }
+    },
+    {
+      "description": "Large Highlighted Text Label for the 5-Star Segment",
+      "mark": {
+        "type": "text",
+        "radius": 170,
+        "fontWeight": "bold",
+        "fontSize": 26
+      },
+      "encoding": {
+        "theta": {
+          "field": "percentage", 
+          "type": "quantitative",
+          "stack": true
+        },
+        "text": {
+          "condition": {
+            "test": "datum.Rating == '5 Stars ★★★★★'",
+            "field": "percentage_label",
+            "type": "nominal"
+          },
+          "value": ""
+        },
+        "color": {
+          "value": "#344e41"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"}
+  }
+}

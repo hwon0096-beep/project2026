@@ -1,0 +1,83 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Distribution of Total Order Values",
+    "subtitle": "Excluding top 1% outliers. Red dashed line marks the Average Order Value (AOV).",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "data/order_totals_clean.csv",
+    "format": {"type": "csv"}
+  },
+  "layer": [
+    {
+      "description": "Base Histogram Layer",
+      "mark": {
+        "type": "bar",
+        "color": "#215E61",
+        "opacity": 0.85,
+        "binSpacing": 1,
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "bin": {"maxbins": 40},
+          "field": "total_order_value",
+          "type": "quantitative",
+          "title": "Total Order Value ($)"
+        },
+        "y": {
+          "aggregate": "count",
+          "type": "quantitative",
+          "title": "Count of Orders"
+        }
+      }
+    },
+    {
+      "description": "AOV Reference Line Layer",
+      "transform": [
+        {
+          "aggregate": [{"op": "mean", "field": "total_order_value", "as": "mean_val"}]
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "rule",
+            "color": "#9BCEC1",
+            "size": 2,
+            "strokeDash": [4, 4]
+          },
+          "encoding": {
+            "x": {
+              "field": "mean_val",
+              "type": "quantitative"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 7,
+            "dy": -120,
+            "fontWeight": "bold",
+            "color": "#9BCEC1"
+          },
+          "encoding": {
+            "x": {"field": "mean_val", "type": "quantitative"},
+            "text": {"value": "Average Order Value (AOV)"}
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

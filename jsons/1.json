@@ -1,0 +1,76 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Top 10 Product Categories by Total Revenue",
+    "anchor": "start",
+    "fontSize": 20,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "url": "data/product_revenue_summary.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "total_revenue": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "if(datum.product_category === 'health_beauty' || datum.product_category === 'watches_gifts', 'Personal Care & Luxury', if(datum.product_category === 'bed_bath_table' || datum.product_category === 'furniture_decor' || datum.product_category === 'housewares', 'Home & Living', if(datum.product_category === 'sports_leisure' || datum.product_category === 'computers_accessories' || datum.product_category === 'cool_stuff', 'Tech & Leisure', 'Automotive & Outdoor')))",
+      "as": "macro_category"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "cornerRadiusEnd": 4,
+    "tooltip": true
+  },
+  "encoding": {
+    "y": {
+      "field": "product_category",
+      "type": "nominal",
+      "sort": {
+        "op": "max",
+        "field": "total_revenue",
+        "order": "descending"
+      },
+      "title": "Product Category"
+    },
+    "x": {
+      "field": "total_revenue",
+      "type": "quantitative",
+      "title": "Total Revenue ($)"
+    },
+    "color": {
+      "field": "macro_category",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Personal Care & Luxury",
+          "Home & Living",
+          "Tech & Leisure",
+          "Automotive & Outdoor"
+        ],
+        "range": [
+          "#FFB6A6",
+          "#FFEBD3",
+          "#9BCEC1",
+          "#67A2C5"
+        ]
+      },
+      "title": "Macro-Category"
+    },
+    "tooltip": [
+      {"field": "macro_category", "type": "nominal", "title": "Macro-Category"},
+      {"field": "product_category", "type": "nominal", "title": "Sub-Category"},
+      {"field": "total_revenue", "type": "quantitative", "title": "Total Revenue", "format": "$,.2f"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Logistics Bottleneck: Carrier Processing vs. Final Mile",
+    "subtitle": "Transit delays happen almost entirely in the final mile, which spikes by over 18 days.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "values": [
+      {"SLA_Performance": "All Orders (Baseline)", "Stage": "1. Carrier Processing", "Days": 2.80},
+      {"SLA_Performance": "All Orders (Baseline)", "Stage": "2. Final Mile Transit", "Days": 9.33},
+      {"SLA_Performance": "Delayed Orders", "Stage": "1. Carrier Processing", "Days": 5.55},
+      {"SLA_Performance": "Delayed Orders", "Stage": "2. Final Mile Transit", "Days": 27.89}
+    ]
+  },
+  "mark": {
+    "type": "bar",
+    "cornerRadiusEnd": 4,
+    "tooltip": true
+  },
+  "encoding": {
+    "y": {
+      "field": "SLA_Performance",
+      "type": "nominal",
+      "title": null,
+      "axis": {"labelFontSize": 12, "labelFontWeight": "bold"}
+    },
+    "x": {
+      "field": "Days",
+      "type": "quantitative",
+      "title": "Average Duration (Days)"
+    },
+    "yOffset": {
+      "field": "Stage"
+    },
+    "color": {
+      "field": "Stage",
+      "type": "nominal",
+      "scale": {
+        "domain": ["1. Carrier Processing", "2. Final Mile Transit"],
+        "range": ["#99FEFF", "#6DE1D2"]
+      },
+      "title": "Fulfillment Phase"
+    },
+    "tooltip": [
+      {"field": "SLA_Performance", "type": "nominal", "title": "Group"},
+      {"field": "Stage", "type": "nominal", "title": "Phase"},
+      {"field": "Days", "type": "quantitative", "title": "Avg. Days", "format": ".1f"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"domain": false}
+  }
+}

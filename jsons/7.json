@@ -1,0 +1,77 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "SLA Fulfillment Performance Accuracy",
+    "subtitle": "93.2% of packages arrive safely ahead of schedule, while 6.8% face carrier delays.",
+    "anchor": "start",
+    "fontSize": 16,
+    "offset": 15
+  },
+  "width": "container",
+  "height": 300,
+  "data": {
+    "values": [
+      {"SLA_Status": "On-Time / Early", "percentage": 93.23},
+      {"SLA_Status": "Delayed", "percentage": 6.77}
+    ]
+  },
+  "transform": [
+    {
+      "calculate": "format(datum.percentage, '.1f') + '%'",
+      "as": "percentage_label"
+    }
+  ],
+  "layer": [
+    {
+      "description": "The Donut Base Layer",
+      "mark": {
+        "type": "arc", 
+        "innerRadius": 70, 
+        "stroke": "#ffffff", 
+        "strokeWidth": 2,
+        "tooltip": true
+      },
+      "encoding": {
+        "theta": {
+          "field": "percentage", 
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "SLA_Status",
+          "type": "nominal",
+          "scale": {
+            "domain": ["On-Time / Early", "Delayed"],
+            "range": ["#3D45AA", "#CFECF3"]
+          },
+          "title": "Delivery SLA Status",
+          "legend": {
+            "orient": "right",
+            "offset": 20
+          }
+        }
+      }
+    },
+    {
+      "description": "Center KPI Value",
+      "transform": [
+        {"filter": "datum.SLA_Status == 'On-Time / Early'"}
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 28,
+        "fontWeight": "bold",
+        "color": "#3D45AA",
+        "radius": 0
+      },
+      "encoding": {
+        "text": {
+          "field": "percentage_label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"}
+  }
+}
